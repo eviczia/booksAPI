@@ -20,8 +20,10 @@ repositories {
 }
 
 dependencies {
+    compile group: 'com.squareup.retrofit2', name: 'retrofit', version: '2.6.1'
+    compile group: 'com.squareup.retrofit2', name: 'converter-jackson', version: '2.6.1'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+//    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -31,7 +33,7 @@ dependencies {
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
-    testImplementation 'org.springframework.security:spring-security-test'
+ //   testImplementation 'org.springframework.security:spring-security-test'
 }
 
 test {
