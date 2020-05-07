@@ -1,7 +1,5 @@
 package com.greenfox.books.controllers;
 
-import com.greenfox.books.models.entities.User;
-import com.greenfox.books.models.entities.Volume;
 import com.greenfox.books.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
