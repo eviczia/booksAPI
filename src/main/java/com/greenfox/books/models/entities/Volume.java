@@ -2,8 +2,9 @@ package com.greenfox.books.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Volume {
@@ -13,12 +14,6 @@ public class Volume {
     private String id;
     @OneToOne
     private VolumeInfo volumeInfo;
-/*    private String title;
-    @ElementCollection
-    private List<String> authors;
-    private String description;
-    private String typeIdentifier;*/
-
 
     public Volume() {
     }
@@ -38,5 +33,4 @@ public class Volume {
     public void setId(String id) {
         this.id = id;
     }
-
 }

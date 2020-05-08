@@ -13,8 +13,6 @@ public class VolumeInfo {
     @ElementCollection
     private List<String> authors;
     private String description;
-/*    private String type;
-    private String identifier;*/
 
     public VolumeInfo() {
     }
@@ -42,8 +40,4 @@ public class VolumeInfo {
     public void setDescription(String description) {
         this.description = description;
     }
-
-
-
-
 }

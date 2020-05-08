@@ -1,7 +1,5 @@
 package com.greenfox.books.services;
 
-//import com.greenfox.books.models.entities.Volume;
-
 import com.greenfox.books.models.entities.ReturnJSon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,41 +59,6 @@ public class BookServiceImpl implements BookService {
             public void onFailure(Call<List<Volume>> call, Throwable t) {
                 t.printStackTrace();
             }
-        });*/
-
-//        return queriedBooks;
-
-
-/*    @Override
-    public List<Volume> processSearchTerm(String searchTerm) {
-        Call<List<Volume>> call = volumeService.receiveData(searchTerm);
-        List<Volume> queriedBooks = new ArrayList<>();
-        try {
-            Response<List<Volume>> response = call.execute();
-            queriedBooks = response.body();
-            return queriedBooks;
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        call.enqueue(new Callback<List<Volume>>() {
-
-            @Override
-            public void onResponse(Call<List<Volume>> call, Response<List<Volume>> response) {
-                if (response.isSuccessful()) {
-                    System.out.println("great, success!");
-                } else {
-                    System.out.println(response.errorBody());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Volume>> call, Throwable t) {
-                t.printStackTrace();
-            }
         });
-
-        return queriedBooks;
-    }*/
+        */
 }
