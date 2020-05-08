@@ -1,21 +1,16 @@
 package com.greenfox.books.services;
 
 //import com.greenfox.books.models.entities.Volume;
+
 import com.greenfox.books.models.entities.ReturnJSon;
-import com.greenfox.books.models.entities.Volume;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.jackson.JacksonConverterFactory;
-import retrofit2.http.Query;
+import retrofit2.converter.gson.GsonConverterFactory;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -31,7 +26,7 @@ public class BookServiceImpl implements BookService {
 //        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl("https://www.googleapis.com/books/v1/")
-                .addConverterFactory(JacksonConverterFactory.create());
+                .addConverterFactory(GsonConverterFactory.create());
 //                .client(httpClient.build());
         Retrofit retrofit = builder.build();
         volumeService = retrofit.create(VolumeService.class);

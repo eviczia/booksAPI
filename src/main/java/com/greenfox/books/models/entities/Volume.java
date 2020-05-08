@@ -1,27 +1,42 @@
 package com.greenfox.books.models.entities;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
 public class Volume {
 
+    @JsonIgnore
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    @JsonProperty("html_url")
-    private String htmlUrl;
-    @JsonProperty("created_at")
-    private String createdAt;
-
-
-    //    private String title;
-//    private List<String> authors;
+    private String id;
+    @OneToOne
+    private VolumeInfo volumeInfo;
+/*    private String title;
+    @ElementCollection
+    private List<String> authors;
     private String description;
+    private String typeIdentifier;*/
+
+
+    public Volume() {
+    }
+
+    public VolumeInfo getVolumeInfo() {
+        return volumeInfo;
+    }
+
+    public void setVolumeInfo(VolumeInfo volumeInfo) {
+        this.volumeInfo = volumeInfo;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
 }

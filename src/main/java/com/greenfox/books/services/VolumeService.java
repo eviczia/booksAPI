@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface VolumeService {
 
-    @GET("/volumes")
+    @GET("volumes")
 //    Call<List<Volume>> receiveData(@Query("q") String searchParam);
     Call<ReturnJSon> receiveData(@Query("q") String searchParam);
 }
