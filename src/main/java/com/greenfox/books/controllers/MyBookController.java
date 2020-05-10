@@ -18,7 +18,16 @@ public class MyBookController {
     }
 
     @GetMapping("/")
-    public ResponseEntity findBooks(@RequestParam(name = "q") String searchTerm) {
+    public ResponseEntity findBooksAnyone() {
+        return ResponseEntity.status(200).body("who are you?");
+    }
+    @GetMapping("/user")
+    public ResponseEntity findBooksUser(@RequestParam(name = "q", required = false) String searchTerm) {
+        if (searchTerm == null) return ResponseEntity.status(200).body("Well hello there");
+        return ResponseEntity.status(200).body(bookService.processSearchTerm(searchTerm));
+    }
+    @GetMapping("/admin")
+    public ResponseEntity findBooksAdmin(@RequestParam(name = "q") String searchTerm) {
         return ResponseEntity.status(200).body(bookService.processSearchTerm(searchTerm));
     }
 }
