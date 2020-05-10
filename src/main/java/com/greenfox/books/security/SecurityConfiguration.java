@@ -30,11 +30,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/admin/**").hasRole(ADMIN.name())
+                .antMatchers("/user/**").hasAnyRole(ADMIN.name(), USER.name())
                 .antMatchers("/", "index").permitAll()
-//                .antMatchers("admin/**").hasRole("ADMIN")
-//                .antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
-//                .antMatchers("/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -59,13 +59,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         UserDetails user1 = User.builder()
                 .username("user1")
                 .password(passwordEncoder.encode("pw1"))
-                .roles(USER.name())
+//                .roles(USER.name())
+                .authorities(USER.getGrantedAuthorities())
                 .build();
 
         UserDetails admin1 = User.builder()
                 .username("admin1")
                 .password(passwordEncoder.encode("pw"))
                 .roles(ADMIN.name())
+                .authorities((ADMIN.getGrantedAuthorities()))
                 .build();
         return new InMemoryUserDetailsManager(user1, admin1);
     }

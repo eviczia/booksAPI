@@ -8,7 +8,7 @@ public class ReturnJSon {
     private Integer totalItems;
     private List<Volume> items;
 
-    public ReturnJSon(String kind, Integer totalItems) {
+    public ReturnJSon(String kind, Integer totalItems, List<Volume> items) {
         this.kind = kind;
         this.totalItems = totalItems;
         this.items = items;

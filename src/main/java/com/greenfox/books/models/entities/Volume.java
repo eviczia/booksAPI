@@ -9,7 +9,7 @@ import javax.persistence.OneToOne;
 @Entity
 public class Volume {
 
-    @JsonIgnore
+//    @JsonIgnore
     @Id
     private String id;
     @OneToOne

@@ -18,6 +18,7 @@ public class MyBookController {
 
     @GetMapping("/")
     public ResponseEntity greetVisitor() {
+        System.out.println("we just had a visitor");
         return ResponseEntity.status(200).body("Hello! Logged in users can access the google books api. Register if you are new here.");
     }
 /*
@@ -28,12 +29,21 @@ public class MyBookController {
     }
 */
     @GetMapping("/user")
-    public ResponseEntity findBooksUser(@RequestParam(name = "q", required = false) String searchTerm) {
+    public ResponseEntity findBooksFromGoogleAPI(@RequestParam(name = "q", required = false) String searchTerm) {
         if (searchTerm == null) return ResponseEntity.status(200).body("Well hello there");
+        System.out.println("a user tried the google api function");
         return ResponseEntity.status(200).body(bookService.processSearchTerm(searchTerm));
     }
+
     @GetMapping("/admin")
-    public ResponseEntity findBooksAdmin(@RequestParam(name = "q") String searchTerm) {
-        return ResponseEntity.status(200).body(bookService.processSearchTerm(searchTerm));
+    public ResponseEntity getMyBooks() {
+        System.out.println("admin looked at the bookshelf contents");
+        return ResponseEntity.status(200).body(bookService.getMyBooks());
+    }
+
+    @PutMapping("/admin")
+    public ResponseEntity addBookToLocalDatabase(@RequestParam(name = "id") String bookId) {
+        System.out.println("admin added to the bookshelf");
+        return ResponseEntity.status(200).body(bookService.keepBook(bookId));
     }
 }

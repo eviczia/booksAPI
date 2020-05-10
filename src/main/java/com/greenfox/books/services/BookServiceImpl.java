@@ -1,6 +1,9 @@
 package com.greenfox.books.services;
 
 import com.greenfox.books.models.entities.ReturnJSon;
+import com.greenfox.books.models.entities.Volume;
+import com.greenfox.books.models.entities.VolumeInfo;
+import com.greenfox.books.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import retrofit2.Call;
@@ -14,6 +17,7 @@ import java.io.IOException;
 public class BookServiceImpl implements BookService {
 
     private VolumeService volumeService;
+    private BookRepository bookRepository;
 
     @Autowired
     public BookServiceImpl() {
@@ -43,6 +47,23 @@ public class BookServiceImpl implements BookService {
         return null;
     }
 
+    @Override
+    public String keepBook(String bookId) {
+        ReturnJSon chosenBookData = processSearchTerm(bookId);
+        for (Volume chosenBook : chosenBookData.getItems()) {
+            bookRepository.save(chosenBook);
+        }
+        return ("Cool, I have new books now!");
+    }
+
+    @Override
+    public ReturnJSon getMyBooks() {
+        Integer myBookshelfSize = Math.toIntExact(bookRepository.count());
+        ReturnJSon myBookshelf = new ReturnJSon("books#volumes", myBookshelfSize, bookRepository.findAll());
+        return myBookshelf;
+    }
+}
+
 
 /*        call.enqueue(new Callback<List<Volume>>() {
 
@@ -61,4 +82,4 @@ public class BookServiceImpl implements BookService {
             }
         });
         */
-}
+
