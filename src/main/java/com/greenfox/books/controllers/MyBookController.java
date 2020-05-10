@@ -41,7 +41,7 @@ public class MyBookController {
         return ResponseEntity.status(200).body(bookService.getMyBooks());
     }
 
-    @PutMapping("/admin")
+    @PostMapping("/admin")
     public ResponseEntity addBookToLocalDatabase(@RequestParam(name = "id") String bookId) {
         System.out.println("admin added to the bookshelf");
         return ResponseEntity.status(200).body(bookService.keepBook(bookId));

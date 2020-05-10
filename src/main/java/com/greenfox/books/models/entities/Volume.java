@@ -1,7 +1,10 @@
 package com.greenfox.books.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.bytecode.enhance.spi.interceptor.AbstractLazyLoadInterceptor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -12,8 +15,9 @@ public class Volume {
 //    @JsonIgnore
     @Id
     private String id;
-    @OneToOne
+    @OneToOne(cascade=CascadeType.ALL)
     private VolumeInfo volumeInfo;
+
 
     public Volume() {
     }

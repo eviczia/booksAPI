@@ -20,7 +20,8 @@ public class BookServiceImpl implements BookService {
     private BookRepository bookRepository;
 
     @Autowired
-    public BookServiceImpl() {
+    public BookServiceImpl(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
         buildRetrofit();
     }
 
