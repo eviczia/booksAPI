@@ -28,8 +28,8 @@ public class MyBookController {
         return ResponseEntity.status(300).body("redirect:/");
     }
 */
-    @GetMapping("/user")
-    public ResponseEntity findBooksFromGoogleAPI(@RequestParam(name = "q", required = false) String searchTerm) {
+    @GetMapping("/search")
+    public ResponseEntity searchGoogleBooksAPI(@RequestParam(name = "q", required = false) String searchTerm) {
         if (searchTerm == null) return ResponseEntity.status(200).body("Well hello there");
         System.out.println("a user tried the google api function");
         return ResponseEntity.status(200).body(bookService.processSearchTerm(searchTerm));

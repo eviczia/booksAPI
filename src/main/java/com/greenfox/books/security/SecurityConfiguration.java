@@ -36,9 +36,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "index").permitAll()
-                .antMatchers(HttpMethod.DELETE, "/admin").hasAuthority(ADMIN_WRITE.name())
-                .antMatchers(HttpMethod.POST, "/admin").hasAuthority(ADMIN_WRITE.name())
-                .antMatchers(HttpMethod.GET, "/admin", "/user/**").hasAnyRole(ADMIN.name(), USER.name())
+                .antMatchers(HttpMethod.DELETE, "/admin").hasAuthority(ADMIN_WRITE.getPermission())
+                .antMatchers(HttpMethod.POST, "/admin").hasAuthority(ADMIN_WRITE.getPermission())
+                .antMatchers("/admin/**").hasRole(ADMIN.name())
+                .antMatchers("/search/**").hasAnyRole(ADMIN.name(), USER.name())
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -70,8 +71,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         UserDetails admin1 = User.builder()
                 .username("admin1")
                 .password(passwordEncoder.encode("pw"))
-                .roles(ADMIN.name())
-                .authorities((ADMIN.getGrantedAuthorities()))
+ //               .roles(ADMIN.name())
+                .authorities(ADMIN.getGrantedAuthorities())
                 .build();
         return new InMemoryUserDetailsManager(user1, admin1);
     }

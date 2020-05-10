@@ -1,7 +1,6 @@
 package com.greenfox.books.security;
 
 import com.google.common.collect.Sets;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Set;
@@ -18,6 +17,7 @@ public enum AppUserRole {
     AppUserRole(Set<AppUserPermission> permissions) {
         this.permissions = permissions;
     }
+
     public Set<AppUserPermission> getPermissions() {
         return permissions;
     }
