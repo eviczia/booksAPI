@@ -3,11 +3,10 @@ package com.greenfox.books.controllers;
 import com.greenfox.books.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("api/books")
 public class MyBookController {
 
     private BookService bookService;
@@ -18,9 +17,16 @@ public class MyBookController {
     }
 
     @GetMapping("/")
-    public ResponseEntity findBooksAnyone() {
-        return ResponseEntity.status(200).body("who are you?");
+    public ResponseEntity greetVisitor() {
+        return ResponseEntity.status(200).body("Hello! Logged in users can access the google books api. Register if you are new here.");
     }
+/*
+    @GetMapping("/register")
+    public ResponseEntity findBooksAnyone(@RequestBody ApplicationUser newUser) {
+        applicationUserService.regoister(newUser);
+        return ResponseEntity.status(300).body("redirect:/");
+    }
+*/
     @GetMapping("/user")
     public ResponseEntity findBooksUser(@RequestParam(name = "q", required = false) String searchTerm) {
         if (searchTerm == null) return ResponseEntity.status(200).body("Well hello there");

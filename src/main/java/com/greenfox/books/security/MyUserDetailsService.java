@@ -1,4 +1,4 @@
-package com.greenfox.books.security;
+/*package com.greenfox.books.security;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,3 +14,4 @@ public class MyUserDetailsService implements UserDetailsService {
         return new MyUserDetails(username);
     }
 }
+*/

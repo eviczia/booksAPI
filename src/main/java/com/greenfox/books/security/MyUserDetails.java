@@ -1,4 +1,4 @@
-package com.greenfox.books.security;
+/*package com.greenfox.books.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -54,3 +54,4 @@ public class MyUserDetails implements UserDetails {
         return true;
     }
 }
+*/
