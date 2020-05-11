@@ -1,26 +1,27 @@
 package com.greenfox.books.security;
 
+import com.greenfox.books.jwt.JwtUsernameAndPasswordAuthFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
-import static com.greenfox.books.security.AppUserPermission.ADMIN_READ;
-import static com.greenfox.books.security.AppUserPermission.ADMIN_WRITE;
 import static com.greenfox.books.security.AppUserRole.ADMIN;
 import static com.greenfox.books.security.AppUserRole.USER;
 
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
@@ -34,12 +35,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .addFilter(new JwtUsernameAndPasswordAuthFilter(authenticationManager()))
                 .authorizeRequests()
                 .antMatchers("/", "index").permitAll()
-                .antMatchers(HttpMethod.DELETE, "/admin").hasAuthority(ADMIN_WRITE.getPermission())
-                .antMatchers(HttpMethod.POST, "/admin").hasAuthority(ADMIN_WRITE.getPermission())
-                .antMatchers("/admin/**").hasRole(ADMIN.name())
-                .antMatchers("/search/**").hasAnyRole(ADMIN.name(), USER.name())
+                .antMatchers("api/**").hasAnyRole(USER.name(), ADMIN.name())
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -62,16 +63,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     protected UserDetailsService userDetailsService() {
         UserDetails user1 = User.builder()
-                .username("user1")
-                .password(passwordEncoder.encode("pw1"))
+                .username("user")
+                .password(passwordEncoder.encode("pw"))
 //                .roles(USER.name())
                 .authorities(USER.getGrantedAuthorities())
                 .build();
 
         UserDetails admin1 = User.builder()
-                .username("admin1")
+                .username("admin")
                 .password(passwordEncoder.encode("pw"))
- //               .roles(ADMIN.name())
+                //               .roles(ADMIN.name())
                 .authorities(ADMIN.getGrantedAuthorities())
                 .build();
         return new InMemoryUserDetailsManager(user1, admin1);

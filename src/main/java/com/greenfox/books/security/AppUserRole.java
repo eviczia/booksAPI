@@ -10,7 +10,7 @@ import static com.greenfox.books.security.AppUserPermission.*;
 
 public enum AppUserRole {
     USER(Sets.newHashSet(USER_READ)),
-    ADMIN(Sets.newHashSet(USER_READ, USER_WRITE, ADMIN_READ, ADMIN_WRITE));
+    ADMIN(Sets.newHashSet(USER_READ, /*USER_WRITE, */ADMIN_READ, ADMIN_WRITE));
 
     private final Set<AppUserPermission> permissions;
 

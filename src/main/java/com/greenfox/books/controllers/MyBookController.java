@@ -3,6 +3,7 @@ package com.greenfox.books.controllers;
 import com.greenfox.books.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -28,21 +29,26 @@ public class MyBookController {
         return ResponseEntity.status(300).body("redirect:/");
     }
 */
-    @GetMapping("/search")
-    public ResponseEntity searchGoogleBooksAPI(@RequestParam(name = "q", required = false) String searchTerm) {
+    @GetMapping("/all-books")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    public ResponseEntity search(@RequestParam(name = "q", required = false) String searchTerm) {
         if (searchTerm == null) return ResponseEntity.status(200).body("Well hello there");
         System.out.println("a user tried the google api function");
         return ResponseEntity.status(200).body(bookService.processSearchTerm(searchTerm));
     }
 
-    @GetMapping("/admin")
+    @GetMapping("/my-books")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('my-books:read')")
     public ResponseEntity getMyBooks() {
         System.out.println("admin looked at the bookshelf contents");
         return ResponseEntity.status(200).body(bookService.getMyBooks());
     }
 
-    @PostMapping("/admin")
-    public ResponseEntity addBookToLocalDatabase(@RequestParam(name = "id") String bookId) {
+    @PostMapping("/my-books")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    @PreAuthorize("hasAuthority('my-books:write')")
+    public ResponseEntity addBook(@RequestParam(name = "id") String bookId) {
         System.out.println("admin added to the bookshelf");
         return ResponseEntity.status(200).body(bookService.keepBook(bookId));
     }
