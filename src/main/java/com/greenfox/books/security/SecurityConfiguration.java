@@ -1,5 +1,6 @@
 package com.greenfox.books.security;
 
+import com.greenfox.books.jwt.JwtTokenverifier;
 import com.greenfox.books.jwt.JwtUsernameAndPasswordAuthFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -38,6 +39,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilter(new JwtUsernameAndPasswordAuthFilter(authenticationManager()))
+                .addFilterAfter(new JwtTokenverifier(), JwtUsernameAndPasswordAuthFilter.class)
                 .authorizeRequests()
                 .antMatchers("/", "index").permitAll()
                 .antMatchers("api/**").hasAnyRole(USER.name(), ADMIN.name())

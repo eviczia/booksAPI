@@ -51,13 +51,13 @@ public class JwtUsernameAndPasswordAuthFilter extends UsernamePasswordAuthentica
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
 
-        String key = "imnottellingyouimnottellingyouimnottellingyou";
+        String secretKey = "imnottellingyouimnottellingyouimnottellingyou";
         String token = Jwts.builder()
                 .setSubject(authResult.getName())
                 .claim("authorities", authResult.getAuthorities())
                 .setIssuedAt(new Date())
                 .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusWeeks(2)))
-                .signWith(Keys.hmacShaKeyFor(key.getBytes()))
+                .signWith(Keys.hmacShaKeyFor(secretKey.getBytes()))
                 .compact();
 
         response.addHeader("Authorization", "Bearer " + token);
